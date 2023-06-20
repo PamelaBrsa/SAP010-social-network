@@ -32,15 +32,13 @@ export default () => {
     </div>
     
     `;
-  
-container.innerHTML = template;
+  container.innerHTML = template;
 
+  const logar = container.querySelector('.btnLogar');
+  logar.addEventListener('click', () => {
+    const email = container.querySelector('.inserir_email');
+    const password = container.querySelector('.digite_senha');
 
-const logar = container.querySelector(".btnLogar")
- logar.addEventListener('click', () => {
-  const email = container.querySelector(".inserir_email")
-  const password = container.querySelector(".digite_senha")
-  
     loginUser(email.value, password.value)
   
     .then(() => {
