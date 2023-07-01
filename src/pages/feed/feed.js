@@ -2,10 +2,12 @@ import { getDoc, doc } from "firebase/firestore";
 import { db, auth } from "../../lib/firebase";
 import { logout } from "../../lib";
 import {
-  pegarPost,
-  criarPost,
-  likePost,
-  deletarPost,
+    pegarPost,
+    criarPost,
+    likePost,
+    deletarPost,
+    editPost,
+
 } from "../../lib/firestone";
 
 let userName = "";
@@ -144,5 +146,37 @@ export default () => {
   }
   mostrarPost();
 
-  return container;
+           const botaoEdit = postElement.querySelector('.btnEdit');
+            botaoEdit.addEventListener('click', () => {
+            const postId = botaoEdit.getAttribute('data-post-id');
+            if (post.name === auth.currentUser.displayName) {
+              const newText = prompt('Digite o novo texto:');
+              if (newText) {
+                editPost(postId, newText);
+                postElement.querySelector('.contentParag').textContent = newText;
+              }
+            } else {
+              alert('Você só pode editar seus próprios posts.');
+            }
+          });
+
+
+        const botaoSair = container.querySelector('.btnSair')
+        botaoSair.addEventListener('click', () => {
+            logout()
+                .then(() => {
+                    window.location.hash = '#home';
+                })
+                .catch(() => {
+                    alert('Erro ao Sair');
+                });
+
+        });
+
+
+    }
+    mostrarPost()
+
+    return container;
+
 };
