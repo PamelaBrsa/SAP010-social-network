@@ -6,7 +6,8 @@ import {
     pegarPost,
     criarPost,
     likePost,
-    deletarPost
+    deletarPost,
+    editPost,
 
 } from "../../lib/firestone";
 
@@ -92,8 +93,6 @@ export default () => {
             postContainer.appendChild(postar)
 
             const btnLike = postar.querySelector('.btnLike')
-
-
             btnLike.addEventListener('click', async () => {
                 const postId = btnLike.getAttribute('data-post-id');
                 const contadorLike = postar.querySelector('.contadorLike')
@@ -140,6 +139,21 @@ export default () => {
 
 
         });
+
+           const botaoEdit = postElement.querySelector('.btnEdit');
+            botaoEdit.addEventListener('click', () => {
+            const postId = botaoEdit.getAttribute('data-post-id');
+            if (post.name === auth.currentUser.displayName) {
+              const newText = prompt('Digite o novo texto:');
+              if (newText) {
+                editPost(postId, newText);
+                postElement.querySelector('.contentParag').textContent = newText;
+              }
+            } else {
+              alert('Você só pode editar seus próprios posts.');
+            }
+          });
+
 
         const botaoSair = container.querySelector('.btnSair')
         botaoSair.addEventListener('click', () => {
